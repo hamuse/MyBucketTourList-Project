@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mytour.web.alldata.AllDataMapper">
+	<select id="createAlldata" parameterType="map">
+		${CREATE_ALLDATA}
+	</select>
+	<insert id="insertAlldata" parameterType="Alldata">
+		INSERT INTO
+		ALLDATA(PLACE,SPOT,POINT,IMG,LATITUDE,INFO) values
+		(#{place},#{spot},#{point},#{img},#{latitude},#{info})
+	</insert>
+	<select id="selectAlldataList" resultType="Alldata">
+		SELECT * FROM ALLDATA
+	</select>
+</mapper>

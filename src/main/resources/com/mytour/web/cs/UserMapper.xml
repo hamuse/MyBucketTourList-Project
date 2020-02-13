@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mytour.web.cs.UserMapper">
+
+	<select id="existId" resultType="int">
+		SELECT COUNT(*)
+		FROM USER
+		WHERE
+		UID LIKE #{uid};
+	</select>
+	<select id="selectByIdPw" resultType="User">
+		SELECT *
+		FROM USER
+		WHERE UID LIKE #{uid}
+		AND PWD LIKE #{pwd}
+	</select>
+
+	<select id="findid" resultType="User" parameterType="User">
+		SELECT *
+		FROM USER
+		WHERE UNAME LIKE #{uname}
+		AND TEL LIKE #{tel}
+	</select>
+	<select id="findpw" resultType="User" parameterType="User">
+		SELECT *
+		FROM USER
+		WHERE UID LIKE #{uid}
+		AND TEL LIKE #{tel}
+	</select>
+
+	<insert id="insertUser" parameterType="User">
+		INSERT INTO USER (UID, PWD, UNAME, NICKNAME,GENDER, BIRTH, TEL) values (
+		#{uid}, #{pwd}, #{uname}, #{nickname}, #{gender},#{birth}, #{tel}
+		)
+	</insert>
+	<delete id="removeUser" parameterType="User">
+		DELETE FROM LIKETO,USEr USING USER INNER JOIN LIKETO ON USER.UID = LIKETO.UID
+		WHERE USER.UID LIKE #{uid}
+		AND USER.PWD LIKE #{pwd};
+	</delete>
+
+	<select id="createUser" parameterType="hashMap">
+		${CREATE_USER}
+	</select>
+
+	<select id="dropUser" parameterType="hashMap">
+		${DROP_USER}
+	</select>
+	<select id="truncateUser" parameterType="hashmap">
+		${TRUNCATE_USER}
+	</select>
+	<update id="update" parameterType="User" >
+	UPDATE USER SET UNAME  = #{uname},NICKNAME = #{nickname},BIRTH = #{birth},
+	TEL = #{tel},
+	WHERE UID LIKE #{uid}
+	</update>
+	<select id="mylist" parameterType="User"  resultType="com.mytour.web.review.Review">
+	SELECT * FROM COMMUNITY WHERE UID LIKE #{uid}
+	</select>
+
+</mapper>

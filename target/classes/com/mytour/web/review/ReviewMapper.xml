@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mytour.web.review.ReviewMapper">
+
+	<select id="createReview" parameterType="hashmap">
+		${CREATE_REVIEW}
+	</select>
+	<select id="createLike" parameterType="hashmap">
+		${CREATE_LIKE}
+	</select>
+	<select id="createComment" parameterType="hashmap">
+		${CREATE_COMMENT}
+	</select>
+
+	<select id="dropReview" parameterType="map">
+		${DROP_TABLE}
+	</select>
+
+	<select id="truncateReview" parameterType="hashmap">
+		${TRUNCATE}
+	</select>
+
+	<select id="reviewlist" parameterType="int"
+		resultType="com.mytour.web.review.Review">
+	SELECT * FROM COMMUNITY ORDER
+	BY ARTSEQ DESC LIMIT
+	#{startRow}, #{pageSize}
+	</select>
+	<select id="allreviewlist"
+		resultType="com.mytour.web.review.Review">
+		SELECT * FROM COMMUNITY ORDER BY ARTSEQ DESC
+	</select>
+	
+
+
+	<insert id="insertReview"
+		parameterType="com.mytour.web.review.Review">
+		INSERT INTO COMMUNITY(UID,IMG,TITLE,CONTENT,TAG)
+		VALUES
+		(#{uid},#{img},#{title},#{content},#{tag})
+	</insert>
+	<select id="countCommunity" resultType="int">
+		SELECT COUNT(*) FROM
+		COMMUNITY
+	</select>
+	<insert id="insertComment"
+		parameterType="com.mytour.web.review.Comment">
+		INSERT INTO COMMENT
+		(COMMENTS,ARTSEQ,UID) VALUES
+		(#{comments},#{artseq},#{uid})
+	</insert>
+
+	<select id="getcomment" parameterType="int"
+		resultType="com.mytour.web.review.Comment">
+		SELECT * FROM COMMENT WHERE ARTSEQ LIKE #{artseq}
+	</select>
+	<select id="selectbyuid"
+		parameterType="com.mytour.web.review.Review" resultType="string">
+		SELECT
+		MAX(ARTSEQ) FROM COMMUNITY WHERE UID LIKE #{uid}
+	</select>
+
+	<insert id="insertIMG"
+		parameterType="com.mytour.web.review.Review">
+		UPDATE COMMUNITY SET IMG = #{img} WHERE ARTSEQ LIKE
+		#{artseq}
+	</insert>
+
+	<select id="getLike" parameterType="String"
+		resultType="com.mytour.web.review.Like">
+		SELECT * FROM LIKETO WHERE ARTSEQ LIKE #{artseq} AND UID
+		LIKE #{uid}
+	</select>
+	<insert id="insertLike" parameterType="com.mytour.web.review.Like">
+		INSERT INTO LIKETO
+		(ARTSEQ,UID,LIKECHECK) VALUES (#{artseq},#{uid},#{likecheck})
+	</insert>
+	<update id="updatelikecnt"
+		parameterType="com.mytour.web.review.Review">
+		UPDATE COMMUNITY SET LIKECNT = #{likecnt} WHERE ARTSEQ =
+		#{artseq}
+	</update>
+	<update id="updatelikecheck"
+		parameterType="com.mytour.web.review.Like">
+		UPDATE LIKETO SET LIKECHECK = #{likecheck} WHERE ARTSEQ
+		LIKE #{artseq} AND
+		UID LIKE #{uid}
+	</update>
+	<select id="likecount" parameterType="String" resultType="int">
+		SELECT
+		COUNT(*) FROM LIKETO WHERE ARTSEQ LIKE #{artseq} AND LIKECHECK LIKE 1
+	</select>
+	<select id="liked" parameterType="com.mytour.web.review.Like"
+		resultType="String">
+		SELECT LIKECHECK FROM LIKETO WHERE ARTSEQ LIKE #{artseq}
+		AND UID LIKE #{uid}
+	</select>
+	<delete id="delete" parameterType="string">
+		DELETE FROM COMMUNITY
+		WHERE ARTSEQ LIKE #{artseq}
+	</delete>
+	<delete id="commentdelete" parameterType="string">
+		DELETE FROM COMMENT
+		WHERE COMMENTNO LIKE #{commentno}
+	</delete>
+	<update id="update" parameterType="com.mytour.web.review.Review">
+		UPDATE COMMUNITY SET
+		TITLE =#{title},CONTENT = #{content} WHERE ARTSEQ LIKE #{artseq}
+	</update>
+	<select id="uidlist" resultType="string">
+		SELECT UID FROM USER
+	</select>
+	<select id="artseqlist" resultType="string">
+		SELECT ARTSEQ FROM COMMUNITY
+	</select>
+	<select id="likeinfo" resultType="com.mytour.web.review.Review">
+		SELECT COUNT(*) AS LIKECNT,ARTSEQ FROM LIKETO GROUP BY ARTSEQ
+	</select>
+	<select id="selectbyId" parameterType="string"
+		resultType="com.mytour.web.cs.User">
+		SELECT * FROM USER WHERE UID LIKE #{uid}
+	</select>
+	<select id="selectbyage" parameterType="hashmap"
+		resultType="com.mytour.web.review.Review">
+	<![CDATA[
+		SELECT * FROM COMMUNITY WHERE  ARTSEQ IN 
+		(SELECT DISTINCT ARTSEQ  FROM LIKETO WHERE UID IN 
+		(SELECT UID FROM (SELECT * FROM USER WHERE GENDER LIKE #{gender})A  
+		WHERE  TIMESTAMPDIFF(YEAR, A.BIRTH, CURDATE())>=#{ages} AND TIMESTAMPDIFF(YEAR, A.BIRTH, CURDATE())<#{endages}))
+		ORDER BY LIKECNT DESC LIMIT 4,16
+	]]>
+	</select>
+	<select id="selectbylike" parameterType="string" resultType="com.mytour.web.review.Review">
+		SELECT * FROM COMMUNITY WHERE TAG IN (SELECT TAG FROM 
+		((SELECT COUNT(*)C,TAG FROM COMMUNITY WHERE ARTSEQ IN (SELECT DISTINCT ARTSEQ FROM
+		LIKETO WHERE UID LIKE #{uid} )GROUP BY TAG ORDER BY C DESC LIMIT
+		2)A)) ORDER BY LIKECNT DESC LIMIT 12
+	</select>
+	<select id="userlikecnt" parameterType="string" resultType="int">
+	SELECT COUNT(*) FROM LIKETO WHERE UID LIKE #{uid}
+	</select>
+
+
+
+</mapper>

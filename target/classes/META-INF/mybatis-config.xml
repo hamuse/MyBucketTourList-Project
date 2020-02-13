@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC  "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="User" type="com.mytour.web.cs.User" />
+		<typeAlias alias="CsProxy" type="com.mytour.web.cs.CsProxy" />
+		<typeAlias alias="Maps" type="com.mytour.web.map.Maps" />
+		<typeAlias alias="Corona" type="com.mytour.web.map.Corona" />
+		<typeAlias alias="Tour" type="com.mytour.web.tour.Tour" />
+		<typeAlias alias="Hotel" type="com.mytour.web.hotel.Hotel" />
+		<typeAlias alias="Resto" type="com.mytour.web.resto.Resto" />
+		<typeAlias alias="AllData"
+			type="com.mytour.web.alldata.AllData" />
+		<typeAlias alias="Space" type="com.mytour.web.space.Space" />
+	</typeAliases>
+</configuration>

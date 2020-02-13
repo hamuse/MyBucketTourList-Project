@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "com.mytour.web.tour.TourMapper">	
+	<select id = "createTour" parameterType = "hashmap">
+		${CREATE_TRAVEL}
+	</select>
+	<select id = "dropTour" parameterType = "map">
+		${DROP_TABLE}
+	</select>
+	<select id="truncateTour" parameterType="hashmap">
+		${TRUNCATE}
+	</select>
+	
+	<insert id = "insertTour" parameterType="com.mytour.web.tour.Tour">
+		INSERT INTO TOUR(PLACE,SPOT,POINT,IMG,LATITUDE,INFO) VALUES
+			(#{place},#{spot},#{point},#{img},#{latitude},#{info})
+	</insert>
+	
+	<select id = "tourList" resultType = "hashmap">
+		SELECT * FROM TOUR
+	</select>
+	<select id = "selectTourByPlace" parameterType="string"	resultType="Tour">
+		SELECT * FROM TOUR WHERE PLACE LIKE #{place}
+	</select>	
+	
+	<select id = "selectTourRandom"	resultType="Tour">
+		SELECT * FROM TOUR ORDER BY RAND() LIMIT 1
+	</select>	
+</mapper>
