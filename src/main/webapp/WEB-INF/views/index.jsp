@@ -33,7 +33,7 @@
 							<p>
 							<h3>hamuseco@gmail.com</h3>
 							<h3>https://github.com/hamuse</h3>
-							<h3>010.4464.4528</h3>
+							<h3></h3>
 							<br /> <a href="http://www.장해경.coo.kr">www.장해경.coo.kr</a> <br />
 							
 							<br />
