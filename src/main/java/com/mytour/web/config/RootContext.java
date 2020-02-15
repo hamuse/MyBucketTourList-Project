@@ -22,8 +22,8 @@ public class RootContext {
 
 		  	dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
 		    dataSource.setUrl("jdbc:mariadb://:3306/hamusetour");
-		    dataSource.setUsername("hamusetour");
-		    dataSource.setPassword("hamusetour");
+		    dataSource.setUsername("");
+		    dataSource.setPassword("");
 
 		    return dataSource;
 	}
