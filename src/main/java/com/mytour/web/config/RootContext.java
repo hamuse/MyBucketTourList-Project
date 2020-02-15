@@ -21,7 +21,7 @@ public class RootContext {
 		  DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
 		  	dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
-		    dataSource.setUrl("jdbc:mariadb://hamusetour.calipbsfwxae.ap-northeast-2.rds.amazonaws.com:3306/hamusetour");
+		    dataSource.setUrl("jdbc:mariadb://:3306/hamusetour");
 		    dataSource.setUsername("hamusetour");
 		    dataSource.setPassword("hamusetour");
 
